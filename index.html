@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Call</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 photos-col">
+                <div class="photos-wrapper">
+
+                </div>
+            </div>
+
+            <div class="col-lg-6 posts-col">
+                <div class="posts-wrapper">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+<script>
+
+    let photosAPI = "https://jsonplaceholder.typicode.com/photos"
+    let postsAPI = "https://jsonplaceholder.typicode.com/posts"
+
+    $(document).ready(function(){
+
+        $.getJSON(photosAPI, function(photoResponse){
+
+            for(i=0; i<photoResponse.length; i++){
+                let photoURL = photoResponse[i].url
+                let thumbnailURL = photoResponse[i].thumbnailUrl
+
+                $('.container > .row > .photos-col > .photos-wrapper').append(`
+                    
+                <div class="photos-container">
+                        <img class="photo" src="${photoURL}" alt="">
+                    </div>
+                
+                `)
+            }
+
+        })
+
+        $.getJSON(postsAPI, function(postResponse){
+
+            
+            for(i=0; i<postResponse.length ; i++){
+
+                let title = postResponse[i].title
+                let body = postResponse[i].body
+
+                console.log(title)
+
+                $('.container > .row > .posts-col > .posts-wrapper').append(`
+                    
+                    <div class="post-container">
+                        <h2 class="post-title">${title}</h2>
+                        <p class="post-body">${body}</p>
+                    </div>
+                
+                `)
+            }
+        })
+
+    })
+
+</script>
+
+</html>
